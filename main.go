@@ -32,6 +32,12 @@ func determineOutput(number int) []string {
 	}
 	orderOfRules = append(orderOfRules, 7)
 
+	setOfRules[11] = func(currentOutput []string) []string {
+		result := []string{"Bong"}
+		return result
+	}
+	orderOfRules = append(orderOfRules, 11)
+
 	for _, divisor := range orderOfRules {
 		if number%divisor == 0 {
 			effect := setOfRules[divisor]

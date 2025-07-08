@@ -17,21 +17,34 @@ var ruleTests = []struct {
 	{7, []string{"Bang"}},
 	{21, []string{"Fizz", "Bang"}},
 	{35, []string{"Buzz", "Bang"}},
+	{11, []string{"Bong"}},
+	{33, []string{"Bong"}},
 }
 
-/*var formatTests = []struct {
-	input    []string
+var formatTests = []struct {
+	words    []string
 	expected string
 }{
-	{"Alice", "Hello, Alice"},
-	{"", "Ok, no greeting for you"},
-}*/
+	{[]string{"Fizz"}, "Fizz"},
+	{[]string{"Fizz", "Buzz"}, "FizzBuzz"},
+	{[]string{"Fizz", "Buzz", "Bang"}, "FizzBuzzBang"},
+	{[]string{}, ""},
+}
 
 func TestDetermineOutput(t *testing.T) {
 	for _, test := range ruleTests {
 		result := determineOutput(test.number)
 		if !reflect.DeepEqual(result, test.words) {
 			errorMsg := fmt.Sprint("incorrect rule output, for number ", test.number, " got: ", result, " expected: ", test.words)
+			t.Error(errorMsg)
+		}
+	}
+}
+func TestFormatOutput(t *testing.T) {
+	for _, test := range formatTests {
+		result := formatOutput(test.words)
+		if !(result == test.expected) {
+			errorMsg := fmt.Sprint("incorrect formatted output, for words ", test.words, " got: ", result, " expected: ", test.expected)
 			t.Error(errorMsg)
 		}
 	}
