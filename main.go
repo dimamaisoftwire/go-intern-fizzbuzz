@@ -5,8 +5,7 @@ import (
 	"strings"
 )
 
-var setOfRules []Rule
-var orderOfRules []int
+var Rules []Rule
 
 type Rule struct {
 	Divisor int
@@ -15,9 +14,9 @@ type Rule struct {
 
 func determineOutput(number int) []string {
 
-	setOfRules = make([]Rule, 0)
+	Rules = make([]Rule, 0)
 	output := make([]string, 0)
-	// Go maps do not preserve order of insertion so need to have an array with order of rules
+
 	threeRule := Rule{3, func(currentOutput []string) []string {
 		result := append(currentOutput, "Fizz")
 		return result
@@ -57,8 +56,8 @@ func determineOutput(number int) []string {
 		result = currentOutput
 		return result
 	}}
-	setOfRules = append(setOfRules, threeRule, fiveRule, sevenRule, elevenRule, thirteenRule, seventeenRule)
-	for _, rule := range setOfRules {
+	Rules = append(Rules, threeRule, fiveRule, sevenRule, elevenRule, thirteenRule, seventeenRule)
+	for _, rule := range Rules {
 		if number%rule.Divisor == 0 {
 			output = rule.Effect(output)
 		}
@@ -81,5 +80,4 @@ func main() {
 			fmt.Println(output)
 		}
 	}
-
 }
