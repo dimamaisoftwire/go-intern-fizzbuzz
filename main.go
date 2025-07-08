@@ -38,6 +38,29 @@ func determineOutput(number int) []string {
 	}
 	orderOfRules = append(orderOfRules, 11)
 
+	setOfRules[13] = func(currentOutput []string) []string {
+		var result []string
+		for i, word := range currentOutput {
+			if word[0] == 'B' {
+				result = append(currentOutput[:i], append([]string{"Fezz"}, currentOutput[i:]...)...)
+				return result
+			}
+		}
+		result = append(currentOutput, "Fezz")
+		return result
+	}
+	orderOfRules = append(orderOfRules, 13)
+
+	setOfRules[17] = func(currentOutput []string) []string {
+		var result []string
+		for i, j := 0, len(currentOutput)-1; i < j; i, j = i+1, j-1 {
+			currentOutput[i], currentOutput[j] = currentOutput[j], currentOutput[i]
+		}
+		result = currentOutput
+		return result
+	}
+	orderOfRules = append(orderOfRules, 17)
+
 	for _, divisor := range orderOfRules {
 		if number%divisor == 0 {
 			effect := setOfRules[divisor]
@@ -59,7 +82,7 @@ func main() {
 		if len(output) == 0 {
 			fmt.Println(i)
 		} else {
-			fmt.Println(output)
+			fmt.Println(i, output)
 		}
 	}
 
