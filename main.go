@@ -1,22 +1,54 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-// This is our main function, this executes by default when we run the main package.
-func main() {
+var setOfRules map[int]func([]string) []string
+var orderOfRules []int
 
-	fmt.Println("Hello, World!")
-	for i := 0; i < 100; i++ {
-		if i%15 == 0 {
-			fmt.Println("FizzBuzz")
-		} else if i%5 == 0 {
-			fmt.Println("Buzz")
-		} else if i%3 == 0 {
-			fmt.Println("Fizz")
-		} else {
-			fmt.Println(i)
+func determineOutput(number int) []string {
+
+	setOfRules = make(map[int]func([]string) []string)
+	orderOfRules = make([]int, 0)
+	output := make([]string, 0)
+	// Go maps do not preserve order of insertion so need to have an array with order of rules
+	setOfRules[3] = func(currentOutput []string) []string {
+		result := append(currentOutput, "Fizz")
+		return result
+	}
+	orderOfRules = append(orderOfRules, 3)
+
+	setOfRules[5] = func(currentOutput []string) []string {
+		result := append(currentOutput, "Buzz")
+		return result
+	}
+	orderOfRules = append(orderOfRules, 5)
+
+	for _, divisor := range orderOfRules {
+		if number%divisor == 0 {
+			effect := setOfRules[divisor]
+			output = effect(output)
 		}
 	}
 
-	// Put your code here...
+	return output
+}
+
+func formatOutput(output []string) string {
+	return strings.Join(output[:], "")
+}
+
+func main() {
+	for i := 0; i < 100; i++ {
+		outputWords := determineOutput(i)
+		output := formatOutput(outputWords)
+		if len(output) == 0 {
+			fmt.Println(i)
+		} else {
+			fmt.Println(output)
+		}
+	}
+
 }
