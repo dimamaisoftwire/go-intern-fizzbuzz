@@ -26,6 +26,12 @@ func determineOutput(number int) []string {
 	}
 	orderOfRules = append(orderOfRules, 5)
 
+	setOfRules[7] = func(currentOutput []string) []string {
+		result := append(currentOutput, "Bang")
+		return result
+	}
+	orderOfRules = append(orderOfRules, 7)
+
 	for _, divisor := range orderOfRules {
 		if number%divisor == 0 {
 			effect := setOfRules[divisor]

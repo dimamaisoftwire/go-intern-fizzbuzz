@@ -14,6 +14,9 @@ var ruleTests = []struct {
 	{6, []string{"Fizz"}},
 	{10, []string{"Buzz"}},
 	{15, []string{"Fizz", "Buzz"}},
+	{7, []string{"Bang"}},
+	{21, []string{"Fizz", "Bang"}},
+	{35, []string{"Buzz", "Bang"}},
 }
 
 /*var formatTests = []struct {
